@@ -205,9 +205,13 @@ function seleccionar(p, todosResultados){
   var tel = p.telefono || "";
   var telMask = tel.length > 6 ? tel.substr(0,3)+"****"+tel.substr(-3) : "No registrado";
   var esActualizado = tel && tel.length >= 10;
+  var colorCard = esActualizado ? "background:#f0fdf4;border:1.5px solid #bbf7d0;" : "background:#fff8e1;border:1.5px solid #f59e0b;";
+  var labelColor = esActualizado ? "color:#16a34a" : "color:#92400e";
+  var label = esActualizado ? "✅ Numero ya registrado anteriormente" : "⚠️ Sin numero registrado aun";
+  document.getElementById("telActual").style.cssText = colorCard + "border-radius:12px;padding:12px 16px;margin-bottom:16px;";
   document.getElementById("telActual").innerHTML =
-    "<h4>"+(esActualizado ? "✅ Numero registrado" : "Numero del sistema")+"</h4>"
-    +"<p>"+telMask+"</p>"
+    "<h4 style=\"font-size:13px;font-weight:800;"+labelColor+"\">"+label+"</h4>"
+    +"<p style=\"font-size:18px;font-weight:900;color:#1a1a1a;letter-spacing:2px;margin:6px 0\">"+telMask+"</p>"
     +"<p class=\"tel-hint\">Si cambio escribe el nuevo. Si sigue igual escribe el mismo.</p>";
 
   document.getElementById("repNombre").value = p.representante || "";
