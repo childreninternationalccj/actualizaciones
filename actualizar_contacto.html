@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actualizar Contacto · Clubs 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f5f5;min-height:100vh;display:flex;justify-content:center}
+.wrap{width:100%;max-width:480px;background:white;min-height:100vh}
+.header{background:#1d4ed8;padding:20px;text-align:center;color:white}
+.header h1{font-size:20px;font-weight:900}
+.header p{font-size:12px;opacity:0.8;margin-top:4px}
+.view{display:none;padding:20px 16px}
+.view.active{display:block}
+.welcome{background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:16px;padding:16px;margin-bottom:20px}
+.welcome h2{font-size:15px;font-weight:900;color:#1d4ed8;margin-bottom:6px}
+.welcome p{font-size:13px;color:#555;line-height:1.6}
+.search-box{display:flex;border:2px solid #e0e0e0;border-radius:14px;overflow:hidden;margin-bottom:10px}
+.search-box:focus-within{border-color:#1d4ed8}
+.search-box input{flex:1;padding:15px 16px;font-size:16px;border:none;outline:none;font-family:inherit}
+.search-box button{padding:15px 20px;background:#1d4ed8;border:none;color:white;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit}
+.search-box button:disabled{background:#93c5fd;cursor:not-allowed}
+.sr-item{border:2px solid #e0e0e0;border-radius:14px;overflow:hidden;margin-bottom:10px;cursor:pointer;transition:all .15s;animation:ap .2s ease}
+.sr-item:hover{border-color:#1d4ed8;background:#eff6ff}
+@keyframes ap{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.sr-top{padding:14px 16px;display:flex;align-items:center;gap:12px}
+.av{width:44px;height:44px;border-radius:50%;background:#dbeafe;color:#1d4ed8;font-size:18px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sr-nombre{font-size:15px;font-weight:800;color:#1a1a1a}
+.sr-meta{font-size:12px;color:#888;margin-top:2px}
+.msg{text-align:center;padding:32px;color:#bbb;font-size:14px;line-height:1.7}
+.btn-back{background:none;border:none;color:#1d4ed8;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;padding:0;margin-bottom:16px;display:flex;align-items:center;gap:4px}
+.familia-card{background:#eff6ff;border:2px solid #bfdbfe;border-radius:16px;padding:16px;margin-bottom:16px}
+.familia-card h3{font-size:15px;font-weight:900;color:#1d4ed8;margin-bottom:12px}
+.hijo-item{display:flex;align-items:center;gap:10px;background:white;border-radius:10px;padding:10px 12px;margin-bottom:8px}
+.hijo-item:last-child{margin-bottom:0}
+.hijo-num{width:32px;height:32px;border-radius:50%;background:#dbeafe;color:#1d4ed8;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hijo-nombre{font-size:13px;font-weight:800;color:#1a1a1a}
+.hijo-meta{font-size:11px;color:#888;margin-top:2px}
+.tel-card{border-radius:12px;padding:12px 16px;margin-bottom:16px}
+.tel-card.registrado{background:#f0fdf4;border:1.5px solid #bbf7d0}
+.tel-card.original{background:#fef9c3;border:1.5px solid #f59e0b}
+.tel-card.vacio{background:#f5f5f5;border:1.5px solid #d4d4d4}
+.tel-card h4{font-size:13px;font-weight:800;margin-bottom:4px}
+.tel-card.registrado h4{color:#16a34a}
+.tel-card.original h4{color:#a16207}
+.tel-card.vacio h4{color:#666}
+.tel-card p{font-size:16px;font-weight:900;color:#1a1a1a;letter-spacing:1px}
+.tel-card .tel-hint{font-size:11px;color:#888;margin-top:4px}
+.field{margin-bottom:16px}
+.field label{font-size:14px;font-weight:800;color:#333;display:block;margin-bottom:8px}
+.field input{width:100%;padding:15px 16px;border:2px solid #e0e0e0;border-radius:14px;font-size:16px;font-family:inherit;outline:none}
+.field input:focus{border-color:#1d4ed8}
+.field input.error{border-color:#dc2626}
+.hint{font-size:12px;color:#aaa;margin-top:5px;line-height:1.4}
+.error-box{background:#fef2f2;border:1.5px solid #fca5a5;border-radius:12px;padding:12px;font-size:13px;color:#dc2626;font-weight:600;margin-bottom:14px;display:none}
+.btn-primary{width:100%;padding:16px;background:#1d4ed8;border:none;border-radius:14px;color:white;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit}
+.btn-primary:disabled{background:#ddd;color:#aaa;cursor:not-allowed}
+.btn-secondary{width:100%;padding:13px;background:#f5f5f5;border:none;border-radius:12px;color:#666;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px}
+.spinner{width:52px;height:52px;border:4px solid #f0f0f0;border-top-color:#1d4ed8;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 20px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.center{text-align:center;padding:60px 20px}
+.result-hero{background:#f0fdf4;border:2.5px solid #25D366;border-radius:20px;padding:24px 20px;margin-bottom:16px;text-align:center}
+.rh-icon{font-size:56px;margin-bottom:12px}
+.result-hero h2{font-size:22px;font-weight:900;color:#0b1e13;margin-bottom:16px}
+.result-info{background:white;border-radius:12px;padding:14px;margin-bottom:14px;text-align:left}
+.ri-row{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px}
+.ri-row:last-child{margin-bottom:0}
+.ri-label{font-size:12px;font-weight:700;color:#888;min-width:80px;flex-shrink:0}
+.ri-val{font-size:13px;font-weight:800;color:#0b1e13;line-height:1.4}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="header">
+  <h1>Actualizar Contacto</h1>
+  <p>Children International · Clubs 2026</p>
+</div>
+
+<!-- BUSCAR -->
+<div class="view active" id="v-buscar">
+  <div class="welcome">
+    <h2>Bienvenido/a 👋</h2>
+    <p>Busca el nombre de tu apadrinado/a para verificar o actualizar el numero de WhatsApp de tu familia.</p>
+  </div>
+  <div class="search-box">
+    <input type="text" id="busqInput" placeholder="Nombre del apadrinado/a..." autocomplete="off"/>
+    <button id="btnBuscar" onclick="buscar()">Buscar</button>
+  </div>
+  <div id="resultados"><div class="msg">Escribe el nombre<br>y toca <strong>Buscar</strong></div></div>
+</div>
+
+<!-- CARGANDO -->
+<div class="view" id="v-cargando">
+  <div class="center">
+    <div class="spinner"></div>
+    <p style="font-size:15px;font-weight:700;color:#666" id="msgCargando">Buscando...</p>
+  </div>
+</div>
+
+<!-- CONFIRMAR -->
+<div class="view" id="v-confirmar">
+  <button class="btn-back" onclick="show('v-buscar')">← Volver</button>
+  <h2 style="font-size:18px;font-weight:900;color:#1a1a1a;margin-bottom:6px">Verificar contacto</h2>
+  <p style="font-size:13px;color:#888;margin-bottom:16px">Confirma o actualiza el numero de WhatsApp de tu familia</p>
+  <div class="familia-card" id="familiaCard"></div>
+  <div id="telCard"></div>
+  <div class="field">
+    <label>Nombre completo del representante</label>
+    <input type="text" id="repNombre" placeholder="Ej: Maria Isabel Torres Mendoza" autocomplete="off"/>
+    <p class="hint">Escribe tu nombre y apellidos completos tal como aparecen en tu cedula</p>
+  </div>
+  <div class="field">
+    <label>Numero de WhatsApp</label>
+    <input type="tel" id="repTelefono" placeholder="Ej: 0991234567" autocomplete="off" inputmode="numeric" maxlength="10"/>
+    <p class="hint">Debe tener 10 digitos. Ejemplo: 0991234567</p>
+  </div>
+  <div id="errorConfirmar" class="error-box"></div>
+  <button class="btn-primary" onclick="guardar()">Confirmar y guardar</button>
+  <button class="btn-secondary" onclick="show('v-buscar')">Cancelar</button>
+</div>
+
+<!-- GUARDANDO -->
+<div class="view" id="v-guardando">
+  <div class="center">
+    <div class="spinner"></div>
+    <p style="font-size:15px;font-weight:700;color:#666">Guardando informacion...</p>
+  </div>
+</div>
+
+<!-- RESULTADO -->
+<div class="view" id="v-resultado">
+  <div class="result-hero">
+    <div class="rh-icon">✅</div>
+    <h2>Contacto actualizado</h2>
+    <div class="result-info" id="rcInfo"></div>
+    <p style="font-size:13px;color:#666;line-height:1.6">Tu informacion ha sido guardada correctamente.</p>
+  </div>
+  <button class="btn-secondary" onclick="reiniciar()">Actualizar otro contacto</button>
+</div>
+
+</div>
+<script>
+var SCRIPT = "https://script.google.com/macros/s/AKfycbzNowByR6C1SBVt_eEnlcMZjmCzJXo7dGKrrHh7H45FxeEeAW2Z6Swsb8DXp2JcwJHHuw/exec";
+
+var personaSeleccionada = null;
+var familiaSeleccionada = [];
+var telefonoActual = "";
+
+function show(id){
+  document.querySelectorAll(".view").forEach(function(v){ v.classList.remove("active"); });
+  document.getElementById(id).classList.add("active");
+}
+
+// ── BUSCAR EN VIVO desde el sheet ──────────────────────────────
+function buscar(){
+  var q = document.getElementById("busqInput").value.trim();
+  if(q.length < 2){
+    document.getElementById("resultados").innerHTML = "<div class=\"msg\">Escribe al menos 2 letras</div>";
+    return;
+  }
+
+  document.getElementById("resultados").innerHTML = "<div class=\"msg\"><div style=\"width:28px;height:28px;border:3px solid #dbeafe;border-top-color:#1d4ed8;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 10px\"></div>Buscando...</div>";
+  document.getElementById("btnBuscar").disabled = true;
+
+  var cbName = "cbB_" + Date.now();
+  var timer = setTimeout(function(){
+    if(window[cbName]){
+      delete window[cbName];
+      document.getElementById("resultados").innerHTML = "<div class=\"msg\">No se pudo conectar. Verifica tu internet e intenta de nuevo.</div>";
+      document.getElementById("btnBuscar").disabled = false;
+    }
+  }, 8000);
+
+  window[cbName] = function(data){
+    clearTimeout(timer);
+    delete window[cbName];
+    var sc = document.getElementById("jsonp_buscar");
+    if(sc) sc.parentNode.removeChild(sc);
+    document.getElementById("btnBuscar").disabled = false;
+    mostrarResultados(data);
+  };
+
+  var sc = document.createElement("script");
+  sc.id = "jsonp_buscar";
+  sc.src = SCRIPT + "?consultaNombre=" + encodeURIComponent(q) + "&callback=" + cbName;
+  sc.onerror = function(){
+    clearTimeout(timer);
+    delete window[cbName];
+    document.getElementById("btnBuscar").disabled = false;
+    document.getElementById("resultados").innerHTML = "<div class=\"msg\">Error de conexion. Intenta de nuevo.</div>";
+  };
+  document.body.appendChild(sc);
+}
+
+document.getElementById("busqInput").addEventListener("keydown", function(e){ if(e.key === "Enter") buscar(); });
+
+function mostrarResultados(data){
+  var cont = document.getElementById("resultados");
+  var lista = data && data.resultados ? data.resultados : [];
+  if(!lista.length){
+    cont.innerHTML = "<div class=\"msg\">No encontramos ese nombre.<br>Prueba con solo el apellido.</div>";
+    return;
+  }
+  cont.innerHTML = "";
+  lista.slice(0, 8).forEach(function(p){
+    var div = document.createElement("div");
+    div.className = "sr-item";
+    div.innerHTML = "<div class=\"sr-top\">"
+      + "<div class=\"av\">" + (p.nombre || "?").charAt(0) + "</div>"
+      + "<div><div class=\"sr-nombre\">" + p.nombre + "</div>"
+      + "<div class=\"sr-meta\">" + p.grupo + " &middot; " + p.edad + " a&ntilde;os &middot; Sector " + p.sector + "</div>"
+      + "<div class=\"sr-meta\">Rep: " + (p.representante || "No registrado") + "</div>"
+      + "</div></div>";
+    div.onclick = function(){ seleccionar(p); };
+    cont.appendChild(div);
+  });
+}
+
+// ── SELECCIONAR participante ────────────────────────────────────
+function seleccionar(p){
+  personaSeleccionada = p;
+  show("v-cargando");
+  document.getElementById("msgCargando").textContent = "Cargando datos de la familia...";
+
+  // Buscar todos los miembros de la familia + teléfono actual
+  var cbName = "cbFam_" + Date.now();
+  var timer = setTimeout(function(){
+    if(window[cbName]){
+      delete window[cbName];
+      // Mostrar formulario con lo que tenemos
+      familiaSeleccionada = [p];
+      telefonoActual = p.telefono || "";
+      mostrarFormulario();
+    }
+  }, 6000);
+
+  window[cbName] = function(data){
+    clearTimeout(timer);
+    delete window[cbName];
+    var sc = document.getElementById("jsonp_fam");
+    if(sc) sc.parentNode.removeChild(sc);
+
+    if(data && data.encontrado){
+      // data viene del endpoint ?consulta= que retorna un solo participante
+      // pero necesitamos la familia completa — la buscamos por nombre parcial del apellido
+      telefonoActual = data.telefono || "";
+      familiaSeleccionada = [];
+      // Buscar familia completa con segundo llamado
+      buscarFamiliaCompleta(p.familia, data.telefono || p.telefono || "");
+    } else {
+      telefonoActual = p.telefono || "";
+      familiaSeleccionada = [p];
+      mostrarFormulario();
+    }
+  };
+
+  var sc = document.createElement("script");
+  sc.id = "jsonp_fam";
+  sc.src = SCRIPT + "?consulta=" + encodeURIComponent(p.codigo) + "&callback=" + cbName;
+  sc.onerror = function(){
+    clearTimeout(timer);
+    delete window[cbName];
+    familiaSeleccionada = [p];
+    telefonoActual = p.telefono || "";
+    mostrarFormulario();
+  };
+  document.body.appendChild(sc);
+}
+
+function buscarFamiliaCompleta(codigoFamilia, telefono){
+  // Buscar todos con el mismo apellido para simular familia
+  // Usamos el código familiar directamente si el backend lo soporta,
+  // o buscamos por apellido. Aquí buscamos el apellido del participante.
+  var apellido = (personaSeleccionada.nombre || "").split(" ").slice(-2).join(" ");
+  var cbName = "cbFam2_" + Date.now();
+
+  window[cbName] = function(data){
+    delete window[cbName];
+    var sc = document.getElementById("jsonp_fam2");
+    if(sc) sc.parentNode.removeChild(sc);
+
+    var todos = (data && data.resultados) ? data.resultados : [personaSeleccionada];
+    // Filtrar solo los que tienen el mismo código familiar
+    var mismaFamilia = todos.filter(function(x){ return x.familia === personaSeleccionada.familia; });
+    familiaSeleccionada = mismaFamilia.length > 0 ? mismaFamilia : [personaSeleccionada];
+    telefonoActual = telefono;
+    mostrarFormulario();
+  };
+
+  var sc = document.createElement("script");
+  sc.id = "jsonp_fam2";
+  sc.src = SCRIPT + "?consultaNombre=" + encodeURIComponent(apellido) + "&callback=" + cbName;
+  sc.onerror = function(){
+    delete window[cbName];
+    familiaSeleccionada = [personaSeleccionada];
+    mostrarFormulario();
+  };
+  document.body.appendChild(sc);
+}
+
+// ── MOSTRAR FORMULARIO ──────────────────────────────────────────
+function mostrarFormulario(){
+  // Tarjeta de familia
+  var famHtml = "<h3>👨‍👩‍👧 Apadrinados de esta familia</h3>";
+  familiaSeleccionada.forEach(function(h, i){
+    famHtml += "<div class=\"hijo-item\">"
+      + "<div class=\"hijo-num\">" + (i+1) + "</div>"
+      + "<div>"
+      + "<div class=\"hijo-nombre\">" + h.nombre + "</div>"
+      + "<div class=\"hijo-meta\">" + h.grupo + " &middot; " + h.edad + " a&ntilde;os &middot; Sector " + h.sector + "</div>"
+      + "</div></div>";
+  });
+  document.getElementById("familiaCard").innerHTML = famHtml;
+
+  // Tarjeta de teléfono
+  var telHtml = "";
+  if(telefonoActual && telefonoActual.trim() !== ""){
+    var t = telefonoActual.trim();
+    var mask = t.length > 6 ? t.substr(0,3) + "****" + t.substr(-3) : t;
+    telHtml = "<div class=\"tel-card registrado\">"
+      + "<h4>📱 Numero actual en el sistema</h4>"
+      + "<p>" + mask + "</p>"
+      + "<p class=\"tel-hint\">Si cambio escribe el nuevo. Si sigue igual escribe el mismo.</p>"
+      + "</div>";
+  } else {
+    telHtml = "<div class=\"tel-card vacio\">"
+      + "<h4>⚠️ Sin numero registrado</h4>"
+      + "<p style=\"font-size:14px;color:#666\">Esta familia no tiene numero registrado aun.</p>"
+      + "<p class=\"tel-hint\">Escribe tu numero de WhatsApp a continuacion.</p>"
+      + "</div>";
+  }
+  document.getElementById("telCard").innerHTML = telHtml;
+
+  // Pre-llenar nombre representante
+  document.getElementById("repNombre").value = personaSeleccionada.representante || "";
+  document.getElementById("repTelefono").value = "";
+  document.getElementById("errorConfirmar").style.display = "none";
+
+  show("v-confirmar");
+}
+
+// ── GUARDAR ─────────────────────────────────────────────────────
+function guardar(){
+  var nombre = document.getElementById("repNombre").value.trim();
+  var tel = document.getElementById("repTelefono").value.trim();
+  var err = document.getElementById("errorConfirmar");
+  err.style.display = "none";
+  document.getElementById("repNombre").classList.remove("error");
+  document.getElementById("repTelefono").classList.remove("error");
+
+  if(nombre.trim().split(" ").filter(function(w){ return w.length > 1; }).length < 2){
+    err.textContent = "Escribe tu nombre Y apellido completos. Ejemplo: Maria Torres Mendoza";
+    err.style.display = "block";
+    document.getElementById("repNombre").classList.add("error");
+    return;
+  }
+  if(!/^[0-9]{10}$/.test(tel)){
+    err.textContent = "El numero debe tener exactamente 10 digitos. Ejemplo: 0991234567";
+    err.style.display = "block";
+    document.getElementById("repTelefono").classList.add("error");
+    return;
+  }
+
+  show("v-guardando");
+
+  var hijos = familiaSeleccionada.map(function(h){ return h.nombre + " " + h.edad + "a " + h.grupo; }).join(" · ");
+
+  var payload = {
+    tipo: "actualizar_contacto",
+    familia: personaSeleccionada.familia,
+    telefono: tel,
+    representante: nombre,
+    fecha: new Date().toLocaleString("es-EC")
+  };
+
+  var url = SCRIPT + "?data=" + encodeURIComponent(JSON.stringify(payload));
+  var img = new Image();
+  img.onload = img.onerror = function(){
+    document.getElementById("rcInfo").innerHTML =
+      "<div class=\"ri-row\"><span class=\"ri-label\">Nombre:</span><span class=\"ri-val\">" + nombre + "</span></div>"
+      + "<div class=\"ri-row\"><span class=\"ri-label\">WhatsApp:</span><span class=\"ri-val\">" + tel + "</span></div>"
+      + "<div class=\"ri-row\"><span class=\"ri-label\">Sector:</span><span class=\"ri-val\">" + personaSeleccionada.sector + "</span></div>"
+      + "<div class=\"ri-row\"><span class=\"ri-label\">Apadrinados:</span><span class=\"ri-val\">" + hijos + "</span></div>";
+    show("v-resultado");
+  };
+  img.src = url;
+}
+
+// ── REINICIAR ───────────────────────────────────────────────────
+function reiniciar(){
+  personaSeleccionada = null;
+  familiaSeleccionada = [];
+  telefonoActual = "";
+  document.getElementById("busqInput").value = "";
+  document.getElementById("resultados").innerHTML = "<div class=\"msg\">Escribe el nombre<br>y toca <strong>Buscar</strong></div>";
+  show("v-buscar");
+}
+</script>
+</body>
+</html>
