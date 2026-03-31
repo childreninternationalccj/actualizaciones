@@ -197,10 +197,38 @@ document.getElementById("busqInput").addEventListener("keydown",function(e){if(e
 
 function seleccionar(p, todosResultados){
   personaSeleccionada = p;
-  // Buscar todos de la misma familia en los resultados
-  familiaSeleccionada = todosResultados.filter(function(x){ return x.familia === p.familia && p.familia !== ""; });
-  if(familiaSeleccionada.length === 0) familiaSeleccionada = [p];
+  show("v-cargando");
 
+  // Consultar al Apps Script por todos los miembros de la familia
+  var cbName = "cb_familia_" + Date.now();
+  window[cbName] = function(d){
+    delete window[cbName];
+    var sc = document.getElementById("jsonp_familia");
+    if(sc) sc.parentNode.removeChild(sc);
+
+    // Usar resultados del servidor si hay, sino usar los de la búsqueda
+    if(d.encontrado && d.resultados && d.resultados.length > 0){
+      familiaSeleccionada = d.resultados;
+    } else {
+      familiaSeleccionada = todosResultados.filter(function(x){ return x.familia === p.familia && p.familia !== ""; });
+      if(familiaSeleccionada.length === 0) familiaSeleccionada = [p];
+    }
+
+    mostrarFormulario(p);
+  };
+
+  var sc = document.createElement("script");
+  sc.id = "jsonp_familia";
+  sc.src = SCRIPT + "?consultaFamilia=" + encodeURIComponent(p.familia) + "&callback=" + cbName;
+  sc.onerror = function(){
+    familiaSeleccionada = [p];
+    mostrarFormulario(p);
+  };
+  document.body.appendChild(sc);
+  setTimeout(function(){ if(window[cbName]){ delete window[cbName]; familiaSeleccionada=[p]; mostrarFormulario(p); }},6000);
+}
+
+function mostrarFormulario(p){
   var famHtml = "<h3>👨‍👩‍👧 Apadrinados de esta familia</h3>";
   familiaSeleccionada.forEach(function(h, i){
     famHtml += "<div class=\"hijo-item\">"
@@ -212,7 +240,6 @@ function seleccionar(p, todosResultados){
   document.getElementById("familiaCard").innerHTML = famHtml;
 
   var tel = String(p.telefono || "").trim();
-  // Limpiar el número — puede venir con espacios o guiones
   var telLimpio = tel.replace(/[^0-9]/g,"");
   var esActualizado = telLimpio.length >= 9;
   var telMask = esActualizado ? telLimpio.substr(0,3)+"****"+telLimpio.substr(-3) : "No registrado";
