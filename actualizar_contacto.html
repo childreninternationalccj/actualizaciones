@@ -202,9 +202,11 @@ function seleccionar(p, todosResultados){
   });
   document.getElementById("familiaCard").innerHTML = famHtml;
 
-  var tel = p.telefono || "";
-  var telMask = tel.length > 6 ? tel.substr(0,3)+"****"+tel.substr(-3) : "No registrado";
-  var esActualizado = tel && tel.length >= 10;
+  var tel = String(p.telefono || "").trim();
+  // Limpiar el número — puede venir con espacios o guiones
+  var telLimpio = tel.replace(/[^0-9]/g,"");
+  var esActualizado = telLimpio.length >= 9;
+  var telMask = esActualizado ? telLimpio.substr(0,3)+"****"+telLimpio.substr(-3) : "No registrado";
   var colorCard = esActualizado ? "background:#f0fdf4;border:1.5px solid #bbf7d0;" : "background:#fff8e1;border:1.5px solid #f59e0b;";
   var labelColor = esActualizado ? "color:#16a34a" : "color:#92400e";
   var label = esActualizado ? "✅ Numero ya registrado anteriormente" : "⚠️ Sin numero registrado aun";
