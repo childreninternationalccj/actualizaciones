@@ -220,17 +220,17 @@ function mostrarResultados(data){
 // ── SELECCIONAR participante ────────────────────────────────────
 function seleccionar(p){
   personaSeleccionada = p;
+  telefonoActual = p.telefono || "";
   show("v-cargando");
-  document.getElementById("msgCargando").textContent = "Cargando datos de la familia...";
+  document.getElementById("msgCargando").textContent = "Cargando familia...";
 
-  // Buscar todos los miembros de la familia + teléfono actual
+  // Buscar hermanos por apellido y filtrar por código familiar
+  var apellido = (p.nombre || "").split(" ").slice(-2).join(" ");
   var cbName = "cbFam_" + Date.now();
   var timer = setTimeout(function(){
     if(window[cbName]){
       delete window[cbName];
-      // Mostrar formulario con lo que tenemos
       familiaSeleccionada = [p];
-      telefonoActual = p.telefono || "";
       mostrarFormulario();
     }
   }, 6000);
@@ -240,60 +240,26 @@ function seleccionar(p){
     delete window[cbName];
     var sc = document.getElementById("jsonp_fam");
     if(sc) sc.parentNode.removeChild(sc);
-
-    if(data && data.encontrado){
-      // data viene del endpoint ?consulta= que retorna un solo participante
-      // pero necesitamos la familia completa — la buscamos por nombre parcial del apellido
-      telefonoActual = data.telefono || "";
-      familiaSeleccionada = [];
-      // Buscar familia completa con segundo llamado
-      buscarFamiliaCompleta(p.familia, data.telefono || p.telefono || "");
-    } else {
-      telefonoActual = p.telefono || "";
-      familiaSeleccionada = [p];
-      mostrarFormulario();
+    var todos = (data && data.resultados) ? data.resultados : [p];
+    var mismaFamilia = todos.filter(function(x){ return x.familia === p.familia && p.familia !== ""; });
+    familiaSeleccionada = mismaFamilia.length > 0 ? mismaFamilia : [p];
+    // Si algún miembro tiene teléfono, usarlo
+    for(var i = 0; i < familiaSeleccionada.length; i++){
+      if(familiaSeleccionada[i].telefono && familiaSeleccionada[i].telefono.trim() !== ""){
+        telefonoActual = familiaSeleccionada[i].telefono;
+        break;
+      }
     }
+    mostrarFormulario();
   };
 
   var sc = document.createElement("script");
   sc.id = "jsonp_fam";
-  sc.src = SCRIPT + "?consulta=" + encodeURIComponent(p.codigo) + "&callback=" + cbName;
+  sc.src = SCRIPT + "?consultaNombre=" + encodeURIComponent(apellido) + "&callback=" + cbName;
   sc.onerror = function(){
     clearTimeout(timer);
     delete window[cbName];
     familiaSeleccionada = [p];
-    telefonoActual = p.telefono || "";
-    mostrarFormulario();
-  };
-  document.body.appendChild(sc);
-}
-
-function buscarFamiliaCompleta(codigoFamilia, telefono){
-  // Buscar todos con el mismo apellido para simular familia
-  // Usamos el código familiar directamente si el backend lo soporta,
-  // o buscamos por apellido. Aquí buscamos el apellido del participante.
-  var apellido = (personaSeleccionada.nombre || "").split(" ").slice(-2).join(" ");
-  var cbName = "cbFam2_" + Date.now();
-
-  window[cbName] = function(data){
-    delete window[cbName];
-    var sc = document.getElementById("jsonp_fam2");
-    if(sc) sc.parentNode.removeChild(sc);
-
-    var todos = (data && data.resultados) ? data.resultados : [personaSeleccionada];
-    // Filtrar solo los que tienen el mismo código familiar
-    var mismaFamilia = todos.filter(function(x){ return x.familia === personaSeleccionada.familia; });
-    familiaSeleccionada = mismaFamilia.length > 0 ? mismaFamilia : [personaSeleccionada];
-    telefonoActual = telefono;
-    mostrarFormulario();
-  };
-
-  var sc = document.createElement("script");
-  sc.id = "jsonp_fam2";
-  sc.src = SCRIPT + "?consultaNombre=" + encodeURIComponent(apellido) + "&callback=" + cbName;
-  sc.onerror = function(){
-    delete window[cbName];
-    familiaSeleccionada = [personaSeleccionada];
     mostrarFormulario();
   };
   document.body.appendChild(sc);
