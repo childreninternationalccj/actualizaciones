@@ -6,131 +6,109 @@
 <title>Actualizar Contacto · Clubs 2026</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f0f4ff;min-height:100vh;display:flex;justify-content:center}
-.wrap{width:100%;max-width:480px;background:white;min-height:100vh;box-shadow:0 0 40px rgba(0,0,0,.08)}
-.header{background:linear-gradient(135deg,#1d4ed8,#2563eb);padding:24px 20px;text-align:center;color:white}
-.header h1{font-size:20px;font-weight:900;letter-spacing:-.3px}
-.header p{font-size:12px;opacity:0.75;margin-top:4px}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f5f5;min-height:100vh;display:flex;justify-content:center}
+.wrap{width:100%;max-width:480px;background:white;min-height:100vh}
+.header{background:#1d4ed8;padding:20px;text-align:center;color:white}
+.header h1{font-size:20px;font-weight:900}
+.header p{font-size:12px;opacity:0.8;margin-top:4px}
 .view{display:none;padding:20px 16px}
 .view.active{display:block}
 .welcome{background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:16px;padding:16px;margin-bottom:20px}
 .welcome h2{font-size:15px;font-weight:900;color:#1d4ed8;margin-bottom:6px}
 .welcome p{font-size:13px;color:#555;line-height:1.6}
-.search-box{display:flex;border:2px solid #e0e0e0;border-radius:14px;overflow:hidden;margin-bottom:12px;transition:border-color .2s}
+.search-box{display:flex;border:2px solid #e0e0e0;border-radius:14px;overflow:hidden;margin-bottom:10px}
 .search-box:focus-within{border-color:#1d4ed8}
-.search-box input{flex:1;padding:15px 16px;font-size:16px;border:none;outline:none;font-family:inherit;background:transparent}
-.search-box button{padding:15px 22px;background:#1d4ed8;border:none;color:white;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;transition:background .15s}
-.search-box button:disabled{background:#93c5fd;cursor:not-allowed}
-.search-box button:hover:not(:disabled){background:#1e40af}
-.sr-item{border:2px solid #e8e8e8;border-radius:14px;overflow:hidden;margin-bottom:10px;cursor:pointer;transition:all .15s;animation:ap .2s ease}
-.sr-item:hover{border-color:#1d4ed8;background:#eff6ff;transform:translateY(-1px)}
-@keyframes ap{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.search-box input{flex:1;padding:15px 16px;font-size:16px;border:none;outline:none;font-family:inherit}
+.search-box button{padding:15px 20px;background:#1d4ed8;border:none;color:white;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit}
+.sr-item{border:2px solid #e0e0e0;border-radius:14px;overflow:hidden;margin-bottom:10px;cursor:pointer;transition:all .15s;animation:ap .2s ease}
+.sr-item:hover{border-color:#1d4ed8;background:#eff6ff}
+@keyframes ap{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 .sr-top{padding:14px 16px;display:flex;align-items:center;gap:12px}
 .av{width:44px;height:44px;border-radius:50%;background:#dbeafe;color:#1d4ed8;font-size:18px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .sr-nombre{font-size:15px;font-weight:800;color:#1a1a1a}
 .sr-meta{font-size:12px;color:#888;margin-top:2px}
-.msg{text-align:center;padding:36px 20px;color:#bbb;font-size:14px;line-height:1.8}
-.btn-back{background:none;border:none;color:#1d4ed8;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;padding:0;margin-bottom:18px;display:flex;align-items:center;gap:4px}
-.section-title{font-size:16px;font-weight:900;color:#1a1a1a;margin-bottom:4px}
-.section-sub{font-size:13px;color:#888;margin-bottom:16px}
+.msg{text-align:center;padding:32px;color:#bbb;font-size:14px;line-height:1.7}
+.btn-back{background:none;border:none;color:#1d4ed8;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;padding:0;margin-bottom:16px;display:flex;align-items:center;gap:4px}
 .familia-card{background:#eff6ff;border:2px solid #bfdbfe;border-radius:16px;padding:16px;margin-bottom:16px}
-.familia-card h3{font-size:14px;font-weight:900;color:#1d4ed8;margin-bottom:12px;display:flex;align-items:center;gap:6px}
-.hijo-item{display:flex;align-items:center;gap:10px;background:white;border-radius:10px;padding:10px 12px;margin-bottom:8px;border:1px solid #e8f0fe}
+.familia-card h3{font-size:15px;font-weight:900;color:#1d4ed8;margin-bottom:12px}
+.hijo-item{display:flex;align-items:center;gap:10px;background:white;border-radius:10px;padding:10px 12px;margin-bottom:8px}
 .hijo-item:last-child{margin-bottom:0}
-.hijo-num{width:30px;height:30px;border-radius:50%;background:#dbeafe;color:#1d4ed8;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hijo-num{width:32px;height:32px;border-radius:50%;background:#dbeafe;color:#1d4ed8;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .hijo-nombre{font-size:13px;font-weight:800;color:#1a1a1a}
 .hijo-meta{font-size:11px;color:#888;margin-top:2px}
-.tel-card{border-radius:12px;padding:14px 16px;margin-bottom:16px}
-.tel-card.registrado{background:#f0fdf4;border:1.5px solid #86efac}
-.tel-card.vacio{background:#fef9c3;border:1.5px solid #fcd34d}
-.tel-card h4{font-size:13px;font-weight:800;margin-bottom:6px}
-.tel-card.registrado h4{color:#15803d}
-.tel-card.vacio h4{color:#92400e}
-.tel-num{font-size:18px;font-weight:900;color:#1a1a1a;letter-spacing:2px;margin-bottom:4px}
-.tel-hint{font-size:11px;color:#888;line-height:1.5}
+.tel-actual{background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:12px;padding:12px 16px;margin-bottom:16px}
+.tel-actual h4{font-size:13px;font-weight:800;color:#16a34a;margin-bottom:4px}
+.tel-actual p{font-size:16px;font-weight:900;color:#1a1a1a;letter-spacing:1px}
+.tel-hint{font-size:11px;color:#888;margin-top:4px}
 .field{margin-bottom:16px}
 .field label{font-size:14px;font-weight:800;color:#333;display:block;margin-bottom:8px}
-.field input{width:100%;padding:15px 16px;border:2px solid #e0e0e0;border-radius:14px;font-size:16px;font-family:inherit;outline:none;transition:border-color .2s}
+.field input{width:100%;padding:15px 16px;border:2px solid #e0e0e0;border-radius:14px;font-size:16px;font-family:inherit;outline:none}
 .field input:focus{border-color:#1d4ed8}
-.field input.error{border-color:#ef4444;background:#fef2f2}
-.hint{font-size:12px;color:#aaa;margin-top:6px;line-height:1.5}
-.error-box{background:#fef2f2;border:1.5px solid #fca5a5;border-radius:12px;padding:12px 14px;font-size:13px;color:#dc2626;font-weight:600;margin-bottom:14px;display:none;line-height:1.5}
-.btn-primary{width:100%;padding:17px;background:#1d4ed8;border:none;border-radius:14px;color:white;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;transition:background .15s;letter-spacing:.2px}
-.btn-primary:hover{background:#1e40af}
-.btn-primary:disabled{background:#e5e7eb;color:#9ca3af;cursor:not-allowed}
-.btn-secondary{width:100%;padding:14px;background:#f5f5f5;border:none;border-radius:12px;color:#555;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:10px;transition:background .15s}
-.btn-secondary:hover{background:#ebebeb}
-.spinner{width:48px;height:48px;border:4px solid #e0e8ff;border-top-color:#1d4ed8;border-radius:50%;animation:spin .75s linear infinite;margin:0 auto 16px}
+.hint{font-size:12px;color:#aaa;margin-top:5px;line-height:1.4}
+.error-box{background:#fef2f2;border:1.5px solid #fca5a5;border-radius:12px;padding:12px;font-size:13px;color:#dc2626;font-weight:600;margin-bottom:14px;display:none}
+.btn-primary{width:100%;padding:16px;background:#1d4ed8;border:none;border-radius:14px;color:white;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit}
+.btn-primary:disabled{background:#ddd;color:#aaa;cursor:not-allowed}
+.btn-secondary{width:100%;padding:13px;background:#f5f5f5;border:none;border-radius:12px;color:#666;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px}
+.spinner{width:52px;height:52px;border:4px solid #f0f0f0;border-top-color:#1d4ed8;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 20px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.center{text-align:center;padding:64px 20px}
-.center p{font-size:15px;font-weight:600;color:#888}
-.result-hero{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #86efac;border-radius:20px;padding:28px 20px;margin-bottom:16px;text-align:center}
-.rh-icon{font-size:52px;margin-bottom:10px}
-.result-hero h2{font-size:20px;font-weight:900;color:#14532d;margin-bottom:16px}
-.result-info{background:white;border-radius:12px;padding:14px;text-align:left;border:1px solid #d1fae5}
-.ri-row{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:1px solid #f0f0f0}
-.ri-row:last-child{border-bottom:none;padding-bottom:0}
-.ri-label{font-size:12px;font-weight:700;color:#888;min-width:85px;flex-shrink:0;padding-top:1px}
-.ri-val{font-size:13px;font-weight:700;color:#1a1a1a;line-height:1.5}
-.loading-dot{display:inline-block;animation:ldot 1.4s infinite}
-.loading-dot:nth-child(2){animation-delay:.2s}
-.loading-dot:nth-child(3){animation-delay:.4s}
-@keyframes ldot{0%,80%,100%{opacity:.3}40%{opacity:1}}
+.center{text-align:center;padding:60px 20px}
+.result-hero{background:#f0fdf4;border:2.5px solid #25D366;border-radius:20px;padding:24px 20px;margin-bottom:16px;text-align:center}
+.rh-icon{font-size:56px;margin-bottom:12px}
+.result-hero h2{font-size:22px;font-weight:900;color:#0b1e13;margin-bottom:16px}
+.result-info{background:white;border-radius:12px;padding:14px;margin-bottom:14px;text-align:left}
+.ri-row{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px}
+.ri-row:last-child{margin-bottom:0}
+.ri-label{font-size:12px;font-weight:700;color:#888;min-width:80px;flex-shrink:0}
+.ri-val{font-size:13px;font-weight:800;color:#0b1e13;line-height:1.4}
 </style>
 </head>
 <body>
 <div class="wrap">
-
 <div class="header">
-  <h1>📱 Actualizar Contacto</h1>
-  <p>Children International · Clubs 2026</p>
+  <h1>Actualizar Contacto</h1>
+  <p>Children International · Juan Montalvo · Clubs 2026</p>
 </div>
 
 <!-- BUSCAR -->
 <div class="view active" id="v-buscar">
   <div class="welcome">
     <h2>Bienvenido/a 👋</h2>
-    <p>Busca el nombre de tu apadrinado/a para actualizar el numero de WhatsApp de tu familia.</p>
+    <p>Busca el nombre de tu apadrinado/a para verificar o actualizar el numero de WhatsApp de tu familia.</p>
   </div>
   <div class="search-box">
     <input type="text" id="busqInput" placeholder="Nombre del apadrinado/a..." autocomplete="off"/>
-    <button id="btnBuscar" onclick="buscar()">Buscar</button>
+    <button onclick="buscar()">Buscar</button>
   </div>
-  <div id="resultados">
-    <div class="msg">✏️ Escribe el nombre<br>y toca <strong>Buscar</strong></div>
-  </div>
+  <div id="resultados"><div class="msg">Escribe el nombre<br>y toca <strong>Buscar</strong></div></div>
 </div>
 
 <!-- CARGANDO -->
 <div class="view" id="v-cargando">
   <div class="center">
     <div class="spinner"></div>
-    <p id="msgCargando">Buscando<span class="loading-dot">.</span><span class="loading-dot">.</span><span class="loading-dot">.</span></p>
+    <p style="font-size:15px;font-weight:700;color:#666">Buscando informacion...</p>
   </div>
 </div>
 
 <!-- CONFIRMAR -->
 <div class="view" id="v-confirmar">
-  <button class="btn-back" onclick="show('v-buscar')">← Volver a buscar</button>
-  <div class="section-title">Verificar contacto</div>
-  <div class="section-sub">Confirma o actualiza el numero de WhatsApp</div>
-
+  <button class="btn-back" onclick="show('v-buscar')">← Volver</button>
+  <h2 style="font-size:18px;font-weight:900;color:#1a1a1a;margin-bottom:6px">Verificar contacto</h2>
+  <p style="font-size:13px;color:#888;margin-bottom:16px">Confirma o actualiza el numero de WhatsApp</p>
   <div class="familia-card" id="familiaCard"></div>
-  <div id="telCard"></div>
-
+  <div class="tel-actual" id="telActual"></div>
   <div class="field">
-    <label>Nombre del representante</label>
+    <label>Nombre completo del representante</label>
     <input type="text" id="repNombre" placeholder="Ej: Maria Isabel Torres Mendoza" autocomplete="off"/>
-    <p class="hint">Tu nombre y apellidos completos tal como aparecen en tu cedula</p>
+    <p class="hint">Escribe tu nombre y apellidos completos</p>
   </div>
   <div class="field">
     <label>Numero de WhatsApp</label>
-    <input type="tel" id="repTelefono" placeholder="Ej: 0991234567" autocomplete="off" inputmode="numeric" maxlength="10"/>
-    <p class="hint">10 digitos. Ejemplo: 0991234567</p>
+    <input type="tel" id="repTelefono" placeholder="Ej: 0991234567" autocomplete="off" inputmode="numeric"/>
+    <p class="hint">Debe tener 10 digitos. Ejemplo: 0991234567</p>
   </div>
-
   <div id="errorConfirmar" class="error-box"></div>
-  <button class="btn-primary" onclick="guardar()">✅ Confirmar y guardar</button>
+  <button class="btn-primary" onclick="guardar()">Confirmar y guardar</button>
   <button class="btn-secondary" onclick="show('v-buscar')">Cancelar</button>
 </div>
 
@@ -138,7 +116,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 <div class="view" id="v-guardando">
   <div class="center">
     <div class="spinner"></div>
-    <p>Guardando informacion<span class="loading-dot">.</span><span class="loading-dot">.</span><span class="loading-dot">.</span></p>
+    <p style="font-size:15px;font-weight:700;color:#666">Guardando informacion...</p>
   </div>
 </div>
 
@@ -146,65 +124,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 <div class="view" id="v-resultado">
   <div class="result-hero">
     <div class="rh-icon">✅</div>
-    <h2>¡Numero actualizado!</h2>
+    <h2>Contacto actualizado</h2>
     <div class="result-info" id="rcInfo"></div>
+    <p style="font-size:13px;color:#666;line-height:1.6">Tu informacion ha sido guardada correctamente.</p>
   </div>
-  <p style="font-size:13px;color:#888;text-align:center;margin-bottom:16px;line-height:1.6">
-    Tu informacion ha sido guardada para toda la familia.
-  </p>
   <button class="btn-secondary" onclick="reiniciar()">Actualizar otro contacto</button>
 </div>
 
-</div><!-- /wrap -->
-
+</div>
 <script>
 var SCRIPT = "https://script.google.com/macros/s/AKfycbzNowByR6C1SBVt_eEnlcMZjmCzJXo7dGKrrHh7H45FxeEeAW2Z6Swsb8DXp2JcwJHHuw/exec";
-
 var personaSeleccionada = null;
-var miembrosFamilia     = [];
-var telefonoActual      = "";
+var familiaSeleccionada = [];
 
-// ── UTILIDADES ────────────────────────────────────────────────
+function norm(s){ return (s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim(); }
+
 function show(id){
-  document.querySelectorAll(".view").forEach(function(v){ v.classList.remove("active"); });
+  document.querySelectorAll(".view").forEach(function(v){v.classList.remove("active");});
   document.getElementById(id).classList.add("active");
 }
-
-function jsonp(params, cb, timeoutMs){
-  var cbName = "cb_" + Date.now() + "_" + Math.floor(Math.random()*9999);
-  var url = SCRIPT + "?" + params + "&callback=" + cbName;
-  var timer = setTimeout(function(){
-    if(window[cbName]){
-      delete window[cbName];
-      var sc = document.getElementById(cbName);
-      if(sc) sc.parentNode.removeChild(sc);
-      cb(null); // timeout
-    }
-  }, timeoutMs || 10000);
-
-  window[cbName] = function(data){
-    clearTimeout(timer);
-    delete window[cbName];
-    var sc = document.getElementById(cbName);
-    if(sc) sc.parentNode.removeChild(sc);
-    cb(data);
-  };
-
-  var sc = document.createElement("script");
-  sc.id = cbName;
-  sc.src = url;
-  sc.onerror = function(){
-    clearTimeout(timer);
-    if(window[cbName]){ delete window[cbName]; }
-    cb(null);
-  };
-  document.body.appendChild(sc);
-}
-
-// ── BUSCAR ────────────────────────────────────────────────────
-document.getElementById("busqInput").addEventListener("keydown", function(e){
-  if(e.key === "Enter") buscar();
-});
 
 function buscar(){
   var q = document.getElementById("busqInput").value.trim();
@@ -212,161 +150,120 @@ function buscar(){
     document.getElementById("resultados").innerHTML = "<div class=\"msg\">Escribe al menos 2 letras</div>";
     return;
   }
-  document.getElementById("resultados").innerHTML =
-    "<div class=\"msg\"><div style=\"width:28px;height:28px;border:3px solid #dbeafe;border-top-color:#1d4ed8;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 10px\"></div>Buscando...</div>";
-  document.getElementById("btnBuscar").disabled = true;
-
-  jsonp("consultaNombre=" + encodeURIComponent(q), function(data){
-    document.getElementById("btnBuscar").disabled = false;
-    if(!data){
-      document.getElementById("resultados").innerHTML =
-        "<div class=\"msg\">❌ Sin conexion. Verifica tu internet e intenta de nuevo.</div>";
-      return;
-    }
-    var lista = data.resultados || [];
-    if(!lista.length){
-      document.getElementById("resultados").innerHTML =
-        "<div class=\"msg\">No encontramos ese nombre.<br>Prueba con solo el apellido.</div>";
-      return;
-    }
+  show("v-cargando");
+  var cbName = "cb_buscar_" + Date.now();
+  window[cbName] = function(d){
+    delete window[cbName];
+    var sc = document.getElementById("jsonp_buscar");
+    if(sc) sc.parentNode.removeChild(sc);
+    show("v-buscar");
     var cont = document.getElementById("resultados");
     cont.innerHTML = "";
-    lista.slice(0, 10).forEach(function(p){
+    if(!d.encontrado || !d.resultados || d.resultados.length === 0){
+      cont.innerHTML = "<div class=\"msg\">No encontramos ese nombre<br>Prueba con solo el apellido</div>";
+      return;
+    }
+    d.resultados.slice(0,8).forEach(function(p){
       var div = document.createElement("div");
       div.className = "sr-item";
-      div.innerHTML =
-        "<div class=\"sr-top\">"
-        + "<div class=\"av\">" + (p.nombre||"?").charAt(0) + "</div>"
-        + "<div>"
-        + "<div class=\"sr-nombre\">" + p.nombre + "</div>"
-        + "<div class=\"sr-meta\">" + p.grupo + " &middot; " + p.edad + " a&ntilde;os &middot; Sector " + p.sector + "</div>"
-        + "<div class=\"sr-meta\">Rep: " + (p.representante||"No registrado") + "</div>"
-        + "</div></div>";
-      div.onclick = function(){ seleccionar(p); };
+      div.innerHTML = "<div class=\"sr-top\">"
+        +"<div class=\"av\">"+p.nombre.charAt(0)+"</div>"
+        +"<div><div class=\"sr-nombre\">"+p.nombre+"</div>"
+        +"<div class=\"sr-meta\">"+p.grupo+" &middot; Sector "+p.sector+"</div>"
+        +"<div class=\"sr-meta\" style=\"color:#bbb;font-size:11px\">"+p.codigo+"</div>"
+        +"</div></div>";
+      div.onclick = function(){ seleccionar(p, d.resultados); };
       cont.appendChild(div);
     });
-  }, 10000);
+  };
+  var sc = document.createElement("script");
+  sc.id = "jsonp_buscar";
+  sc.src = SCRIPT + "?consultaNombre=" + encodeURIComponent(q) + "&callback=" + cbName;
+  sc.onerror = function(){ show("v-buscar"); document.getElementById("resultados").innerHTML = "<div class=\"msg\">Error de conexion. Intenta de nuevo.</div>"; };
+  document.body.appendChild(sc);
+  setTimeout(function(){ if(window[cbName]){ delete window[cbName]; show("v-buscar"); document.getElementById("resultados").innerHTML = "<div class=\"msg\">Tiempo agotado. Intenta de nuevo.</div>"; }},8000);
 }
 
-// ── SELECCIONAR → cargar familia completa ─────────────────────
-function seleccionar(p){
+document.getElementById("busqInput").addEventListener("keydown",function(e){if(e.key==="Enter")buscar();});
+
+function seleccionar(p, todosResultados){
   personaSeleccionada = p;
-  show("v-cargando");
-  document.getElementById("msgCargando").innerHTML =
-    "Cargando familia<span class=\"loading-dot\">.</span><span class=\"loading-dot\">.</span><span class=\"loading-dot\">.</span>";
+  // Buscar todos de la misma familia en los resultados
+  familiaSeleccionada = todosResultados.filter(function(x){ return x.familia === p.familia && p.familia !== ""; });
+  if(familiaSeleccionada.length === 0) familiaSeleccionada = [p];
 
-  jsonp("consultaFamilia=" + encodeURIComponent(p.familia), function(data){
-    if(data && data.encontrado && data.miembros && data.miembros.length > 0){
-      miembrosFamilia = data.miembros;
-      telefonoActual  = data.telefono || p.telefono || "";
-    } else {
-      // fallback: usar solo el participante seleccionado
-      miembrosFamilia = [p];
-      telefonoActual  = p.telefono || "";
-    }
-    mostrarFormulario();
-  }, 8000);
-}
-
-// ── MOSTRAR FORMULARIO ────────────────────────────────────────
-function mostrarFormulario(){
-  // Lista de apadrinados
   var famHtml = "<h3>👨‍👩‍👧 Apadrinados de esta familia</h3>";
-  miembrosFamilia.forEach(function(h, i){
-    famHtml +=
-      "<div class=\"hijo-item\">"
-      + "<div class=\"hijo-num\">" + (i+1) + "</div>"
-      + "<div>"
-      + "<div class=\"hijo-nombre\">" + h.nombre + "</div>"
-      + "<div class=\"hijo-meta\">" + h.grupo + " &middot; " + h.edad + " a&ntilde;os &middot; Sector " + h.sector + "</div>"
-      + "</div></div>";
+  familiaSeleccionada.forEach(function(h, i){
+    famHtml += "<div class=\"hijo-item\">"
+      +"<div class=\"hijo-num\">"+(i+1)+"</div>"
+      +"<div><div class=\"hijo-nombre\">"+h.nombre+"</div>"
+      +"<div class=\"hijo-meta\">"+h.grupo+" &middot; Sector "+h.sector+"</div>"
+      +"</div></div>";
   });
   document.getElementById("familiaCard").innerHTML = famHtml;
 
-  // Teléfono actual
-  var telHtml = "";
-  if(telefonoActual && telefonoActual.trim() !== ""){
-    var t = telefonoActual.trim();
-    var mask = t.length >= 7 ? t.substr(0,3) + " **** " + t.substr(-3) : t;
-    telHtml =
-      "<div class=\"tel-card registrado\">"
-      + "<h4>📱 Numero actual registrado</h4>"
-      + "<div class=\"tel-num\">" + mask + "</div>"
-      + "<p class=\"tel-hint\">Si cambio, escribe el nuevo. Si sigue igual, escribelo de todas formas.</p>"
-      + "</div>";
-  } else {
-    telHtml =
-      "<div class=\"tel-card vacio\">"
-      + "<h4>⚠️ Sin numero registrado aun</h4>"
-      + "<p class=\"tel-hint\">Escribe tu numero de WhatsApp a continuacion para quedar registrado.</p>"
-      + "</div>";
-  }
-  document.getElementById("telCard").innerHTML = telHtml;
+  var tel = p.telefono || "";
+  var telMask = tel.length > 6 ? tel.substr(0,3)+"****"+tel.substr(-3) : "No registrado";
+  var esActualizado = tel && tel.length >= 10;
+  document.getElementById("telActual").innerHTML =
+    "<h4>"+(esActualizado ? "✅ Numero registrado" : "Numero del sistema")+"</h4>"
+    +"<p>"+telMask+"</p>"
+    +"<p class=\"tel-hint\">Si cambio escribe el nuevo. Si sigue igual escribe el mismo.</p>";
 
-  // Pre-llenar representante
-  var rep = (miembrosFamilia[0] && miembrosFamilia[0].representante) || personaSeleccionada.representante || "";
-  document.getElementById("repNombre").value = rep;
+  document.getElementById("repNombre").value = p.representante || "";
   document.getElementById("repTelefono").value = "";
   document.getElementById("errorConfirmar").style.display = "none";
-  document.getElementById("repNombre").classList.remove("error");
-  document.getElementById("repTelefono").classList.remove("error");
-
   show("v-confirmar");
 }
 
-// ── GUARDAR ───────────────────────────────────────────────────
 function guardar(){
   var nombre = document.getElementById("repNombre").value.trim();
-  var tel    = document.getElementById("repTelefono").value.trim();
-  var err    = document.getElementById("errorConfirmar");
+  var tel = document.getElementById("repTelefono").value.trim();
+  var err = document.getElementById("errorConfirmar");
   err.style.display = "none";
-  document.getElementById("repNombre").classList.remove("error");
-  document.getElementById("repTelefono").classList.remove("error");
 
-  if(nombre.split(" ").filter(function(w){ return w.length > 1; }).length < 2){
-    err.textContent = "Escribe tu nombre Y apellido completos. Ejemplo: Maria Torres Mendoza";
-    err.style.display = "block";
-    document.getElementById("repNombre").classList.add("error");
-    return;
-  }
-  if(!/^[0-9]{10}$/.test(tel)){
-    err.textContent = "El numero debe tener exactamente 10 digitos. Ejemplo: 0991234567";
-    err.style.display = "block";
-    document.getElementById("repTelefono").classList.add("error");
-    return;
-  }
+  if(!nombre){ err.textContent="Escribe el nombre completo del representante."; err.style.display="block"; return; }
+  if(nombre.split(" ").length < 2){ err.textContent="Escribe nombre Y apellido. Ejemplo: Maria Torres Mendoza"; err.style.display="block"; return; }
+  if(!tel){ err.textContent="Escribe el numero de WhatsApp."; err.style.display="block"; return; }
+  if(tel.length < 10){ err.textContent="El numero debe tener 10 digitos. Ejemplo: 0991234567"; err.style.display="block"; return; }
 
   show("v-guardando");
 
-  var payload = JSON.stringify({
-    tipo:          "actualizar_contacto",
-    familia:       personaSeleccionada.familia,
-    telefono:      tel,
-    representante: nombre,
-    fecha:         new Date().toLocaleString("es-EC")
-  });
+  var payload = {
+    tipo: "actualizar_contacto",
+    familia: personaSeleccionada.familia,
+    telefono: tel,
+    representante: nombre
+  };
 
-  var img = new Image();
-  img.onload = img.onerror = function(){
-    var hijos = miembrosFamilia.map(function(h){ return h.nombre; }).join(", ");
+  var cbName = "cb_guardar_" + Date.now();
+  window[cbName] = function(d){
+    delete window[cbName];
+    var sc = document.getElementById("jsonp_guardar");
+    if(sc) sc.parentNode.removeChild(sc);
     document.getElementById("rcInfo").innerHTML =
-      "<div class=\"ri-row\"><span class=\"ri-label\">Representante</span><span class=\"ri-val\">" + nombre + "</span></div>"
-      + "<div class=\"ri-row\"><span class=\"ri-label\">WhatsApp</span><span class=\"ri-val\">" + tel + "</span></div>"
-      + "<div class=\"ri-row\"><span class=\"ri-label\">Sector</span><span class=\"ri-val\">" + personaSeleccionada.sector + "</span></div>"
-      + "<div class=\"ri-row\"><span class=\"ri-label\">Apadrinados</span><span class=\"ri-val\">" + hijos + "</span></div>";
+      "<div class=\"ri-row\"><span class=\"ri-label\">Representante:</span><span class=\"ri-val\">"+nombre+"</span></div>"
+      +"<div class=\"ri-row\"><span class=\"ri-label\">WhatsApp:</span><span class=\"ri-val\">"+tel+"</span></div>"
+      +"<div class=\"ri-row\"><span class=\"ri-label\">Familias:</span><span class=\"ri-val\">"+familiaSeleccionada.map(function(h){return h.nombre;}).join(", ")+"</span></div>";
     show("v-resultado");
   };
-  img.src = SCRIPT + "?data=" + encodeURIComponent(payload);
+  var sc = document.createElement("script");
+  sc.id = "jsonp_guardar";
+  sc.src = SCRIPT + "?data=" + encodeURIComponent(JSON.stringify(payload)) + "&callback=" + cbName;
+  sc.onerror = function(){
+    show("v-confirmar");
+    document.getElementById("errorConfirmar").textContent = "Error al guardar. Verifica tu internet e intenta de nuevo.";
+    document.getElementById("errorConfirmar").style.display = "block";
+  };
+  document.body.appendChild(sc);
+  setTimeout(function(){ if(window[cbName]){ delete window[cbName]; show("v-resultado"); }},8000);
 }
 
-// ── REINICIAR ─────────────────────────────────────────────────
 function reiniciar(){
   personaSeleccionada = null;
-  miembrosFamilia     = [];
-  telefonoActual      = "";
+  familiaSeleccionada = [];
   document.getElementById("busqInput").value = "";
-  document.getElementById("resultados").innerHTML =
-    "<div class=\"msg\">✏️ Escribe el nombre<br>y toca <strong>Buscar</strong></div>";
+  document.getElementById("resultados").innerHTML = "<div class=\"msg\">Escribe el nombre<br>y toca <strong>Buscar</strong></div>";
   show("v-buscar");
 }
 </script>
