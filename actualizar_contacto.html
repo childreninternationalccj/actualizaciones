@@ -166,11 +166,20 @@ function buscar(){
     d.resultados.slice(0,8).forEach(function(p){
       var div = document.createElement("div");
       div.className = "sr-item";
+      // Contar hermanos de la misma familia
+      var hermanos = d.resultados.filter(function(x){ return x.familia === p.familia && x.familia !== "" && x.nombre !== p.nombre; });
+      var hermanosText = hermanos.length > 0
+        ? "<div class=\"sr-meta\" style=\"color:#1d4ed8;font-size:11px\">+ "+hermanos.map(function(h){return h.nombre.split(" ")[0];}).join(", ")+"</div>"
+        : "";
+      var telIndicador = p.telefono && String(p.telefono).replace(/[^0-9]/g,"").length >= 9
+        ? "<span style=\"background:#dcfce7;color:#16a34a;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;margin-left:6px\">✅ Registrado</span>"
+        : "<span style=\"background:#fff8e1;color:#92400e;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;margin-left:6px\">⚠️ Sin numero</span>";
       div.innerHTML = "<div class=\"sr-top\">"
         +"<div class=\"av\">"+p.nombre.charAt(0)+"</div>"
-        +"<div><div class=\"sr-nombre\">"+p.nombre+"</div>"
+        +"<div><div class=\"sr-nombre\">"+p.nombre+telIndicador+"</div>"
         +"<div class=\"sr-meta\">"+p.grupo+" &middot; Sector "+p.sector+"</div>"
-        +"<div class=\"sr-meta\" style=\"color:#bbb;font-size:11px\">"+p.codigo+"</div>"
+        +(p.representante ? "<div class=\"sr-meta\">Rep: "+p.representante+"</div>" : "")
+        +hermanosText
         +"</div></div>";
       div.onclick = function(){ seleccionar(p, d.resultados); };
       cont.appendChild(div);
